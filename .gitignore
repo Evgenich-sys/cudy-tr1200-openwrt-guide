@@ -1,0 +1,11 @@
+*.bin
+*.img
+*.tar
+*.tar.gz
+*.backup
+*.docx
+*.key
+*.conf
+*.log
+*backup*
+*secret*

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+WHITE="/sys/class/leds/white:status"
+RED="/sys/class/leds/red:power"
+PROBE="1.1.1.1"
+
+led_off() {
+    echo none > "$1/trigger"
+    echo 0 > "$1/brightness"
+}
+
+led_on() {
+    echo none > "$1/trigger"
+    cat "$1/max_brightness" > "$1/brightness"
+}
+
+led_blink() {
+    echo timer > "$1/trigger"
+    echo 300 > "$1/delay_on"
+    echo 300 > "$1/delay_off"
+}
+
+[ -d "$WHITE" ] && [ -d "$RED" ] || {
+    logger -t vpn-led-monitor "expected LED paths were not found"
+    exit 1
+}
+
+while true; do
+    if ifstatus VPN 2>/dev/null | grep -q '"up": true'; then
+        if ping -I VPN -c 1 -W 2 "$PROBE" >/dev/null 2>&1; then
+            led_off "$RED"
+            led_on "$WHITE"
+        else
+            led_off "$RED"
+            led_blink "$WHITE"
+        fi
+    else
+        led_off "$WHITE"
+        led_on "$RED"
+    fi
+    sleep 5
+done
