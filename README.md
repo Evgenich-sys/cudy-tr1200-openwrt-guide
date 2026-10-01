@@ -340,7 +340,7 @@ reboot -f
 
 # OpenWrt on Cudy TR1200 v1
 
-[??????? ?????? ????](#russian-version)
+[Russian version above](#russian-version)
 
 An installation and practical configuration guide for the **Cudy TR1200 v1** travel router, based on a tested OpenWrt 24.10.8 setup.
 
