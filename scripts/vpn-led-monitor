@@ -2,7 +2,7 @@
 
 WHITE="/sys/class/leds/white:status"
 RED="/sys/class/leds/red:power"
-PROBE="1.1.1.1"
+PROBE="one.one.one.one"
 
 led_off() {
     echo none > "$1/trigger"
